@@ -1,0 +1,48 @@
+<form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Store Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayout="column wrap" fxLayoutAlign="start" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label>Store name</mat-label>
+          <input matInput placeholder="Store name" formControlName="name" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Contact name" formControlName="contactName" />
+          <mat-error *ngIf="storeForm.controls['contactName'].hasError('required')">
+            Contact name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <conpono-address></conpono-address>
+        <conpono-contact></conpono-contact>
+        <mat-radio-group formControlName="shipping">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <mat-radio-button value="door">Door-step delivery</mat-radio-button>
+            <mat-radio-button value="curb">Curbside pickup</mat-radio-button>
+            <mat-radio-button value="common">Common-point delivery</mat-radio-button>
+          </div>
+        </mat-radio-group>
+
+
+        <div [formGroup]="capacityForm" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+          <mat-form-field fxFlex>
+            <mat-label>Curb capacity</mat-label>
+            <input type="number" matInput placeholder="Curb capacity" formControlName="curb" />
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <mat-label>Delivery capacity</mat-label>
+            <input type="number" matInput placeholder="Delivery capacity" formControlName="delivery" />
+          </mat-form-field>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
