@@ -7,10 +7,14 @@
       <div fxLayout="column wrap" fxLayoutAlign="start" fxLayoutGap="10px">
         <mat-form-field>
           <mat-label>Store name</mat-label>
-          <input matInput placeholder="Store name" formControlName="name" />
+          <input matInput placeholder="Store name" formControlName="name" required />
+          <mat-error *ngIf="storeForm.controls['name'].hasError('required')">
+            Store name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Contact name" formControlName="contactName" />
+          <mat-label>Contact name</mat-label>
+          <input matInput placeholder="Contact name" formControlName="contactName" required />
           <mat-error *ngIf="storeForm.controls['contactName'].hasError('required')">
             Contact name is <strong>required</strong>
           </mat-error>
@@ -24,8 +28,6 @@
             <mat-radio-button value="common">Common-point delivery</mat-radio-button>
           </div>
         </mat-radio-group>
-
-
         <div [formGroup]="capacityForm" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
           <mat-form-field fxFlex>
             <mat-label>Curb capacity</mat-label>
@@ -37,12 +39,10 @@
             <input type="number" matInput placeholder="Delivery capacity" formControlName="delivery" />
           </mat-form-field>
         </div>
-
       </div>
-
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="storeForm.invalid">Submit</button>
     </mat-card-actions>
   </mat-card>
 </form>

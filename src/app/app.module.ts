@@ -13,6 +13,7 @@ import { MaterialModule } from './material/material.module';
 import { OrderComponent } from './order/order.component';
 import { StoreFormComponent } from './store/store-form/store-form.component';
 import { StoreListComponent } from './store/store-list/store-list.component';
+import { AuthComponent } from './auth/auth.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { StoreListComponent } from './store/store-list/store-list.component';
     AddressComponent,
     CustomerFormComponent,
     ContactComponent,
-    OrderComponent
+    OrderComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

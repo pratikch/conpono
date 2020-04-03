@@ -1,8 +1,8 @@
-<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="addressForm">
   <div fxLayout="column wrap" fxLayoutAlign="start" fxLayoutGap="10px">
     <mat-form-field fxFlex>
       <mat-label>Address</mat-label>
-      <input matInput placeholder="Address" formControlName="address" />
+      <input matInput placeholder="Address" formControlName="address" required/>
       <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
         Address is <strong>required</strong>
       </mat-error>
@@ -14,14 +14,14 @@
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-form-field fxFlex>
         <mat-label>City</mat-label>
-        <input matInput placeholder="City" formControlName="city" />
+        <input matInput placeholder="City" formControlName="city" required />
         <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
           City is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field fxFlex>
         <mat-label>State</mat-label>
-        <mat-select placeholder="State" formControlName="state">
+        <mat-select placeholder="State" formControlName="state" required>
           <mat-option *ngFor="let state of states" [value]="state.abbreviation">
             {{ state.name }}
           </mat-option>
@@ -33,7 +33,7 @@
       <mat-form-field fxFlex>
         <mat-label>Zip code</mat-label>
         <input matInput #postalCode maxlength="5" placeholder="Zip code" type="number"
-          formControlName="postalCode" />
+          formControlName="postalCode" required/>
         <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
       </mat-form-field>
     </div>
