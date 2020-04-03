@@ -10,6 +10,14 @@
             "StackName": "amplify-conpono-test-154846",
             "StackId": "arn:aws:cloudformation:us-west-2:310335168240:stack/amplify-conpono-test-154846/4a55bcd0-75fd-11ea-a6d7-0a5539cb4a4e",
             "AmplifyAppId": "d2pxfxl29ql52g"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d2pxfxl29ql52g",
+                    "type": "cicd"
+                }
+            }
         }
     }
 }
