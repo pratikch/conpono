@@ -17,11 +17,6 @@
                     "appId": "d1j4ip2zq6znjs",
                     "type": "cicd"
                 }
-            },
-            "auth": {
-                "conponoae6b7b53": {
-                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"2870036666437650\",\"client_secret\":\"aa7eab9fce8abac02c82e47a02de0b16\"},{\"ProviderName\":\"Google\",\"client_id\":\"1022331264706-7hp8gof47trs17vm2bs9ihs7veego09t.apps.googleusercontent.com\",\"client_secret\":\"BHbpabGsdSgCHqD7tL89qWo4\"}]"
-                }
             }
         }
     }
