@@ -13,8 +13,7 @@ export class StoreFormComponent implements OnInit {
   @ViewChild(ContactComponent, {static: true}) contactForm: ContactComponent;
   storeForm: FormGroup;
   
-  constructor(private fb: FormBuilder,
-    private apiservice: APIService) {}
+  constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     this.storeForm = this.fb.group({
       name: [null, Validators.required],
@@ -51,6 +50,6 @@ export class StoreFormComponent implements OnInit {
       phone: this.storeForm.value.contact.phone,
       email: this.storeForm.value.contact.email,
     }
-    this.apiservice.CreateStore(storeInput);
+    // this.apiservice.CreateStore(storeInput);
   }
 }
