@@ -24,6 +24,7 @@
     "@angular/router": "~8.2.14",
     "@aws-amplify/api": "^2.2.1",
     "@aws-amplify/pubsub": "^2.1.9",
+    "@aws-amplify/ui": "^2.0.2",
     "@types/googlemaps": "^3.39.3",
     "aws-amplify": "^2.3.0",
     "aws-amplify-angular": "^4.1.9",
