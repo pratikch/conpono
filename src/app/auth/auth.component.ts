@@ -12,7 +12,9 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this.amplifyService.authStateChange$.subscribe(authState => {
+      
       if (authState.state === "signedIn") {
+        console.log('i am in signed in state');
         this.router.navigate(["/new-store"]);
       }
     });

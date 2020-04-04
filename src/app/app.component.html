@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
   <div fxLayout="column" fxFlex>
-    <mat-toolbar color="primary" *ngIf="signIn">
+    <mat-toolbar color="primary" *ngIf="signedIn">
       <mat-toolbar-row>
         <span>Conpono</span>
         <span class="example-spacer"></span>
@@ -11,6 +11,7 @@
           New Store
         </button>
         <button mat-button>List Stores</button>
+        <button mat-button (click)="signOut()">Sign out</button>
       </mat-toolbar-row>
     </mat-toolbar>
     <div fxLayout="column" fxFlex="90%" fxLayoutGap="10px">

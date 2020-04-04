@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: "new-order", component: OrderComponent, canActivate: [AuthGuard] },
   { path: "login", component: AuthComponent },
   { path: "", component: LandingComponent },
-  { path: "**", component: LandingComponent }
+  { path: "**", redirectTo: "", pathMatch: 'full' }
 ];
 
 @NgModule({
