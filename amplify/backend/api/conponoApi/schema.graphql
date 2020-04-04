@@ -1,0 +1,70 @@
+type Customer @model @key(fields: ["email"]) {
+  customerId: ID!
+  name: String!
+  address: String!
+  address2: String
+  city: String
+  state: String
+  zipCode: Int
+  email: String!
+  phone: String
+  orders: [Order] @connection(name: "CustomerOrders")
+  shippingPreference: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Store @model @key(fields: ["storeId", "email"]) {
+  storeId: ID!
+  name: String!
+  contactName: String!
+  address: String!
+  address2: String
+  city: String
+  state: String
+  zipCode: Int
+  status: String
+  email: String!
+  phone: String
+  curbCapacity: Int
+  deliveryCapacity: Int
+  shippingPreference: String
+  orders: [Order] @connection(name: "OrderedStore")
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Order @model 
+  @key(fields: ["orderId", "status", "createdAt"])
+  @key(name: "ByStatusAndCreatedAt", fields: ["status", "createdAt"], queryField: "ordersByStatusAndCreatedAt") {
+  orderId: ID!
+  customer: Customer @connection(name: "CustomerOrders")
+  items: [OrderItem] @connection(name: "OrderedItems")
+  store: Store @connection(name: "OrderedStore")
+  brandSubstitution: Boolean
+  status: OrderStatus!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  
+}
+
+enum OrderStatus {
+    DELIVERED
+    IN_TRANSIT
+    PENDING
+    UNKNOWN
+    STORE_ASSIGNED
+    LOCKED
+    NEW
+}
+
+type OrderItem @model {
+  itemId: ID!
+  name: String!
+  unit: String!
+  size: String
+  weight: Int
+  quantity: Int
+  order: Order @connection(name: "OrderedItems")
+}
+

@@ -1,0 +1,499 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateCustomer {
+  onCreateCustomer {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateCustomer {
+  onUpdateCustomer {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteCustomer {
+  onDeleteCustomer {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateStore {
+  onCreateStore {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateStore {
+  onUpdateStore {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteStore {
+  onDeleteStore {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateOrder {
+  onCreateOrder {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateOrder {
+  onUpdateOrder {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteOrder {
+  onDeleteOrder {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateOrderItem {
+  onCreateOrderItem {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}
+subscription OnUpdateOrderItem {
+  onUpdateOrderItem {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}
+subscription OnDeleteOrderItem {
+  onDeleteOrderItem {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}

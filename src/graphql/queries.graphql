@@ -1,0 +1,387 @@
+# this is an auto generated file. This will be overwritten
+query GetCustomer($email: String!) {
+  getCustomer(email: $email) {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+query ListCustomers(
+  $email: String
+  $filter: ModelCustomerFilterInput
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listCustomers(
+    email: $email
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetStore($storeId: ID!, $email: String!) {
+  getStore(storeId: $storeId, email: $email) {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListStores(
+  $storeId: ID
+  $email: ModelStringKeyConditionInput
+  $filter: ModelStoreFilterInput
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listStores(
+    storeId: $storeId
+    email: $email
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetOrder($orderId: ID!, $status: OrderStatus!, $createdAt: AWSDateTime!) {
+  getOrder(orderId: $orderId, status: $status, createdAt: $createdAt) {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+query ListOrders(
+  $orderId: ID
+  $statusCreatedAt: ModelOrderPrimaryCompositeKeyConditionInput
+  $filter: ModelOrderFilterInput
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listOrders(
+    orderId: $orderId
+    statusCreatedAt: $statusCreatedAt
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetOrderItem($id: ID!) {
+  getOrderItem(id: $id) {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}
+query ListOrderItems(
+  $filter: ModelOrderItemFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOrderItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
+      order {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query OrdersByStatusAndCreatedAt(
+  $status: OrderStatus
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOrderFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  ordersByStatusAndCreatedAt(
+    status: $status
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}

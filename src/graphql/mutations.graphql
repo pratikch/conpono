@@ -1,0 +1,535 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateCustomer(
+  $input: CreateCustomerInput!
+  $condition: ModelCustomerConditionInput
+) {
+  createCustomer(input: $input, condition: $condition) {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateCustomer(
+  $input: UpdateCustomerInput!
+  $condition: ModelCustomerConditionInput
+) {
+  updateCustomer(input: $input, condition: $condition) {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteCustomer(
+  $input: DeleteCustomerInput!
+  $condition: ModelCustomerConditionInput
+) {
+  deleteCustomer(input: $input, condition: $condition) {
+    customerId
+    name
+    address
+    address2
+    city
+    state
+    zipCode
+    email
+    phone
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    shippingPreference
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateStore(
+  $input: CreateStoreInput!
+  $condition: ModelStoreConditionInput
+) {
+  createStore(input: $input, condition: $condition) {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateStore(
+  $input: UpdateStoreInput!
+  $condition: ModelStoreConditionInput
+) {
+  updateStore(input: $input, condition: $condition) {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteStore(
+  $input: DeleteStoreInput!
+  $condition: ModelStoreConditionInput
+) {
+  deleteStore(input: $input, condition: $condition) {
+    storeId
+    name
+    contactName
+    address
+    address2
+    city
+    state
+    zipCode
+    status
+    email
+    phone
+    curbCapacity
+    deliveryCapacity
+    shippingPreference
+    orders {
+      items {
+        orderId
+        brandSubstitution
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateOrder(
+  $input: CreateOrderInput!
+  $condition: ModelOrderConditionInput
+) {
+  createOrder(input: $input, condition: $condition) {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateOrder(
+  $input: UpdateOrderInput!
+  $condition: ModelOrderConditionInput
+) {
+  updateOrder(input: $input, condition: $condition) {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteOrder(
+  $input: DeleteOrderInput!
+  $condition: ModelOrderConditionInput
+) {
+  deleteOrder(input: $input, condition: $condition) {
+    orderId
+    customer {
+      customerId
+      name
+      address
+      address2
+      city
+      state
+      zipCode
+      email
+      phone
+      orders {
+        nextToken
+      }
+      shippingPreference
+      createdAt
+      updatedAt
+    }
+    items {
+      items {
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
+      }
+      nextToken
+    }
+    store {
+      storeId
+      name
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    brandSubstitution
+    status
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateOrderItem(
+  $input: CreateOrderItemInput!
+  $condition: ModelOrderItemConditionInput
+) {
+  createOrderItem(input: $input, condition: $condition) {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}
+mutation UpdateOrderItem(
+  $input: UpdateOrderItemInput!
+  $condition: ModelOrderItemConditionInput
+) {
+  updateOrderItem(input: $input, condition: $condition) {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}
+mutation DeleteOrderItem(
+  $input: DeleteOrderItemInput!
+  $condition: ModelOrderItemConditionInput
+) {
+  deleteOrderItem(input: $input, condition: $condition) {
+    itemId
+    name
+    unit
+    size
+    weight
+    quantity
+    order {
+      orderId
+      customer {
+        customerId
+        name
+        address
+        address2
+        city
+        state
+        zipCode
+        email
+        phone
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      items {
+        nextToken
+      }
+      store {
+        storeId
+        name
+        contactName
+        address
+        address2
+        city
+        state
+        zipCode
+        status
+        email
+        phone
+        curbCapacity
+        deliveryCapacity
+        shippingPreference
+        createdAt
+        updatedAt
+      }
+      brandSubstitution
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}
