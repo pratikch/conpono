@@ -17,6 +17,11 @@
                     "appId": "d3uxrhyknx9rnz",
                     "type": "cicd"
                 }
+            },
+            "auth": {
+                "conponoe28a01d2": {
+                    "hostedUIProviderCreds": "[]"
+                }
             }
         }
     }

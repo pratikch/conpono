@@ -1,5 +1,20 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
-  <div fxLayout="column" fxFlex="90%" fxLayoutGap="10px">
-    <router-outlet></router-outlet>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+  <div fxLayout="column" fxFlex>
+    <mat-toolbar color="primary" *ngIf="signIn">
+      <mat-toolbar-row>
+        <span>Conpono</span>
+        <span class="example-spacer"></span>
+        <button mat-button [routerLink]="['/new-order']" routerLinkActive="router-link-active">
+          Order
+        </button>
+        <button mat-button [routerLink]="['/new-store']" routerLinkActive="router-link-active">
+          New Store
+        </button>
+        <button mat-button>List Stores</button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div fxLayout="column" fxFlex="90%" fxLayoutGap="10px">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

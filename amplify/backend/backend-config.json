@@ -4,5 +4,13 @@
             "service": "amplifyhosting",
             "type": "cicd"
         }
+    },
+    "auth": {
+        "conponoe28a01d2": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false
+        }
     }
 }
