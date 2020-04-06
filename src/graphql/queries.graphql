@@ -1,6 +1,7 @@
 # this is an auto generated file. This will be overwritten
-query GetCustomer($email: String!) {
-  getCustomer(email: $email) {
+query GetCustomer($id: ID!, $email: String!) {
+  getCustomer(id: $id, email: $email) {
+    id
     customerId
     name
     address
@@ -12,6 +13,7 @@ query GetCustomer($email: String!) {
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -26,13 +28,15 @@ query GetCustomer($email: String!) {
   }
 }
 query ListCustomers(
-  $email: String
+  $id: ID
+  $email: ModelStringKeyConditionInput
   $filter: ModelCustomerFilterInput
   $limit: Int
   $nextToken: String
   $sortDirection: ModelSortDirection
 ) {
   listCustomers(
+    id: $id
     email: $email
     filter: $filter
     limit: $limit
@@ -40,6 +44,7 @@ query ListCustomers(
     sortDirection: $sortDirection
   ) {
     items {
+      id
       customerId
       name
       address
@@ -61,6 +66,7 @@ query ListCustomers(
 }
 query GetStore($storeId: ID!, $email: String!) {
   getStore(storeId: $storeId, email: $email) {
+    id
     storeId
     name
     contactName
@@ -77,6 +83,7 @@ query GetStore($storeId: ID!, $email: String!) {
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -106,6 +113,7 @@ query ListStores(
     sortDirection: $sortDirection
   ) {
     items {
+      id
       storeId
       name
       contactName
@@ -129,10 +137,12 @@ query ListStores(
     nextToken
   }
 }
-query GetOrder($orderId: ID!, $status: OrderStatus!, $createdAt: AWSDateTime!) {
-  getOrder(orderId: $orderId, status: $status, createdAt: $createdAt) {
+query GetOrder($orderId: ID!, $status: OrderStatus!) {
+  getOrder(orderId: $orderId, status: $status) {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -150,17 +160,15 @@ query GetOrder($orderId: ID!, $status: OrderStatus!, $createdAt: AWSDateTime!) {
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -189,7 +197,7 @@ query GetOrder($orderId: ID!, $status: OrderStatus!, $createdAt: AWSDateTime!) {
 }
 query ListOrders(
   $orderId: ID
-  $statusCreatedAt: ModelOrderPrimaryCompositeKeyConditionInput
+  $status: ModelStringKeyConditionInput
   $filter: ModelOrderFilterInput
   $limit: Int
   $nextToken: String
@@ -197,15 +205,17 @@ query ListOrders(
 ) {
   listOrders(
     orderId: $orderId
-    statusCreatedAt: $statusCreatedAt
+    status: $status
     filter: $filter
     limit: $limit
     nextToken: $nextToken
     sortDirection: $sortDirection
   ) {
     items {
+      id
       orderId
       customer {
+        id
         customerId
         name
         address
@@ -220,9 +230,15 @@ query ListOrders(
         updatedAt
       }
       items {
-        nextToken
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
       }
       store {
+        id
         storeId
         name
         contactName
@@ -248,78 +264,41 @@ query ListOrders(
     nextToken
   }
 }
-query GetOrderItem($id: ID!) {
-  getOrderItem(id: $id) {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
-  }
-}
-query ListOrderItems(
-  $filter: ModelOrderItemFilterInput
+query StoresByName(
+  $name: String
+  $sortDirection: ModelSortDirection
+  $filter: ModelStoreFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listOrderItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  storesByName(
+    name: $name
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
     items {
-      itemId
+      id
+      storeId
       name
-      unit
-      size
-      weight
-      quantity
-      order {
-        orderId
-        brandSubstitution
-        status
-        createdAt
-        updatedAt
+      contactName
+      address
+      address2
+      city
+      state
+      zipCode
+      status
+      email
+      phone
+      curbCapacity
+      deliveryCapacity
+      shippingPreference
+      orders {
+        nextToken
       }
+      createdAt
+      updatedAt
     }
     nextToken
   }
@@ -341,8 +320,10 @@ query OrdersByStatusAndCreatedAt(
     nextToken: $nextToken
   ) {
     items {
+      id
       orderId
       customer {
+        id
         customerId
         name
         address
@@ -357,9 +338,15 @@ query OrdersByStatusAndCreatedAt(
         updatedAt
       }
       items {
-        nextToken
+        itemId
+        name
+        unit
+        size
+        weight
+        quantity
       }
       store {
+        id
         storeId
         name
         contactName

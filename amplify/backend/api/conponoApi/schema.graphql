@@ -1,4 +1,5 @@
-type Customer @model @key(fields: ["email"]) {
+type Customer @model @key(fields: ["id", "email"]){
+  id: ID!
   customerId: ID!
   name: String!
   address: String!
@@ -10,11 +11,13 @@ type Customer @model @key(fields: ["email"]) {
   phone: String
   orders: [Order] @connection(name: "CustomerOrders")
   shippingPreference: String
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
 }
 
-type Store @model @key(fields: ["storeId", "email"]) {
+type Store @model @key(fields: ["storeId", "email"])
+  @key(name: "ByStoreName", fields: ["name"], queryField: "storesByName") {
+  id: ID!
   storeId: ID!
   name: String!
   contactName: String!
@@ -30,23 +33,24 @@ type Store @model @key(fields: ["storeId", "email"]) {
   deliveryCapacity: Int
   shippingPreference: String
   orders: [Order] @connection(name: "OrderedStore")
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
 }
 
 type Order @model 
-  @key(fields: ["orderId", "status", "createdAt"])
-  @key(name: "ByStatusAndCreatedAt", fields: ["status", "createdAt"], queryField: "ordersByStatusAndCreatedAt") {
+  @key(fields: ["orderId", "status"])
+  @key(name: "ByStatusAndCreatedAt", fields: ["status", "createdAt"], queryField: "ordersByStatusAndCreatedAt"){
+  id: ID!
   orderId: ID!
   customer: Customer @connection(name: "CustomerOrders")
-  items: [OrderItem] @connection(name: "OrderedItems")
+  items: [OrderItem]!
   store: Store @connection(name: "OrderedStore")
   brandSubstitution: Boolean
   status: OrderStatus!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-  
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
 }
+
 
 enum OrderStatus {
     DELIVERED
@@ -58,13 +62,11 @@ enum OrderStatus {
     NEW
 }
 
-type OrderItem @model {
+type OrderItem {
   itemId: ID!
   name: String!
   unit: String!
   size: String
   weight: Int
   quantity: Int
-  order: Order @connection(name: "OrderedItems")
 }
-

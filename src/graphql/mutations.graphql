@@ -4,6 +4,7 @@ mutation CreateCustomer(
   $condition: ModelCustomerConditionInput
 ) {
   createCustomer(input: $input, condition: $condition) {
+    id
     customerId
     name
     address
@@ -15,6 +16,7 @@ mutation CreateCustomer(
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -33,6 +35,7 @@ mutation UpdateCustomer(
   $condition: ModelCustomerConditionInput
 ) {
   updateCustomer(input: $input, condition: $condition) {
+    id
     customerId
     name
     address
@@ -44,6 +47,7 @@ mutation UpdateCustomer(
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -62,6 +66,7 @@ mutation DeleteCustomer(
   $condition: ModelCustomerConditionInput
 ) {
   deleteCustomer(input: $input, condition: $condition) {
+    id
     customerId
     name
     address
@@ -73,6 +78,7 @@ mutation DeleteCustomer(
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -91,6 +97,7 @@ mutation CreateStore(
   $condition: ModelStoreConditionInput
 ) {
   createStore(input: $input, condition: $condition) {
+    id
     storeId
     name
     contactName
@@ -107,6 +114,7 @@ mutation CreateStore(
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -124,6 +132,7 @@ mutation UpdateStore(
   $condition: ModelStoreConditionInput
 ) {
   updateStore(input: $input, condition: $condition) {
+    id
     storeId
     name
     contactName
@@ -140,6 +149,7 @@ mutation UpdateStore(
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -157,6 +167,7 @@ mutation DeleteStore(
   $condition: ModelStoreConditionInput
 ) {
   deleteStore(input: $input, condition: $condition) {
+    id
     storeId
     name
     contactName
@@ -173,6 +184,7 @@ mutation DeleteStore(
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -190,8 +202,10 @@ mutation CreateOrder(
   $condition: ModelOrderConditionInput
 ) {
   createOrder(input: $input, condition: $condition) {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -209,17 +223,15 @@ mutation CreateOrder(
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -251,8 +263,10 @@ mutation UpdateOrder(
   $condition: ModelOrderConditionInput
 ) {
   updateOrder(input: $input, condition: $condition) {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -270,17 +284,15 @@ mutation UpdateOrder(
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -312,8 +324,10 @@ mutation DeleteOrder(
   $condition: ModelOrderConditionInput
 ) {
   deleteOrder(input: $input, condition: $condition) {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -331,17 +345,15 @@ mutation DeleteOrder(
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -366,170 +378,5 @@ mutation DeleteOrder(
     status
     createdAt
     updatedAt
-  }
-}
-mutation CreateOrderItem(
-  $input: CreateOrderItemInput!
-  $condition: ModelOrderItemConditionInput
-) {
-  createOrderItem(input: $input, condition: $condition) {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
-  }
-}
-mutation UpdateOrderItem(
-  $input: UpdateOrderItemInput!
-  $condition: ModelOrderItemConditionInput
-) {
-  updateOrderItem(input: $input, condition: $condition) {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
-  }
-}
-mutation DeleteOrderItem(
-  $input: DeleteOrderItemInput!
-  $condition: ModelOrderItemConditionInput
-) {
-  deleteOrderItem(input: $input, condition: $condition) {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
   }
 }

@@ -7,6 +7,7 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import * as Observable from "zen-observable";
 
 export type CreateCustomerInput = {
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -17,8 +18,8 @@ export type CreateCustomerInput = {
   email: string;
   phone?: string | null;
   shippingPreference?: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
 
 export type ModelCustomerConditionInput = {
@@ -116,6 +117,7 @@ export enum OrderStatus {
 }
 
 export type UpdateCustomerInput = {
+  id: string;
   customerId?: string | null;
   name?: string | null;
   address?: string | null;
@@ -131,10 +133,12 @@ export type UpdateCustomerInput = {
 };
 
 export type DeleteCustomerInput = {
+  id: string;
   email: string;
 };
 
 export type CreateStoreInput = {
+  id?: string | null;
   storeId: string;
   name: string;
   contactName: string;
@@ -149,8 +153,8 @@ export type CreateStoreInput = {
   curbCapacity?: number | null;
   deliveryCapacity?: number | null;
   shippingPreference?: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
 
 export type ModelStoreConditionInput = {
@@ -174,6 +178,7 @@ export type ModelStoreConditionInput = {
 };
 
 export type UpdateStoreInput = {
+  id: string;
   storeId: string;
   name?: string | null;
   contactName?: string | null;
@@ -198,17 +203,29 @@ export type DeleteStoreInput = {
 };
 
 export type CreateOrderInput = {
+  id?: string | null;
   orderId: string;
+  items: Array<OrderItemInput | null>;
   brandSubstitution?: boolean | null;
   status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
   orderCustomerId?: string | null;
   orderStoreId?: string | null;
 };
 
+export type OrderItemInput = {
+  itemId: string;
+  name: string;
+  unit: string;
+  size?: string | null;
+  weight?: number | null;
+  quantity?: number | null;
+};
+
 export type ModelOrderConditionInput = {
   brandSubstitution?: ModelBooleanInput | null;
+  createdAt?: ModelStringInput | null;
   updatedAt?: ModelStringInput | null;
   and?: Array<ModelOrderConditionInput | null> | null;
   or?: Array<ModelOrderConditionInput | null> | null;
@@ -223,10 +240,12 @@ export type ModelBooleanInput = {
 };
 
 export type UpdateOrderInput = {
+  id: string;
   orderId: string;
+  items?: Array<OrderItemInput | null> | null;
   brandSubstitution?: boolean | null;
   status: OrderStatus;
-  createdAt: string;
+  createdAt?: string | null;
   updatedAt?: string | null;
   orderCustomerId?: string | null;
   orderStoreId?: string | null;
@@ -235,46 +254,20 @@ export type UpdateOrderInput = {
 export type DeleteOrderInput = {
   orderId: string;
   status: OrderStatus;
-  createdAt: string;
 };
 
-export type CreateOrderItemInput = {
-  itemId: string;
-  name: string;
-  unit: string;
-  size?: string | null;
-  weight?: number | null;
-  quantity?: number | null;
-  orderItemOrderId?: string | null;
-};
-
-export type ModelOrderItemConditionInput = {
-  itemId?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  unit?: ModelStringInput | null;
-  size?: ModelStringInput | null;
-  weight?: ModelIntInput | null;
-  quantity?: ModelIntInput | null;
-  and?: Array<ModelOrderItemConditionInput | null> | null;
-  or?: Array<ModelOrderItemConditionInput | null> | null;
-  not?: ModelOrderItemConditionInput | null;
-};
-
-export type UpdateOrderItemInput = {
-  itemId?: string | null;
-  name?: string | null;
-  unit?: string | null;
-  size?: string | null;
-  weight?: number | null;
-  quantity?: number | null;
-  orderItemOrderId?: string | null;
-};
-
-export type DeleteOrderItemInput = {
-  id?: string | null;
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export type ModelCustomerFilterInput = {
+  id?: ModelIDInput | null;
   customerId?: ModelIDInput | null;
   name?: ModelStringInput | null;
   address?: ModelStringInput | null;
@@ -297,17 +290,8 @@ export enum ModelSortDirection {
   DESC = "DESC"
 }
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-};
-
 export type ModelStoreFilterInput = {
+  id?: ModelIDInput | null;
   storeId?: ModelIDInput | null;
   name?: ModelStringInput | null;
   contactName?: ModelStringInput | null;
@@ -329,22 +313,8 @@ export type ModelStoreFilterInput = {
   not?: ModelStoreFilterInput | null;
 };
 
-export type ModelOrderPrimaryCompositeKeyConditionInput = {
-  eq?: ModelOrderPrimaryCompositeKeyInput | null;
-  le?: ModelOrderPrimaryCompositeKeyInput | null;
-  lt?: ModelOrderPrimaryCompositeKeyInput | null;
-  ge?: ModelOrderPrimaryCompositeKeyInput | null;
-  gt?: ModelOrderPrimaryCompositeKeyInput | null;
-  between?: Array<ModelOrderPrimaryCompositeKeyInput | null> | null;
-  beginsWith?: ModelOrderPrimaryCompositeKeyInput | null;
-};
-
-export type ModelOrderPrimaryCompositeKeyInput = {
-  status?: OrderStatus | null;
-  createdAt?: string | null;
-};
-
 export type ModelOrderFilterInput = {
+  id?: ModelIDInput | null;
   orderId?: ModelIDInput | null;
   brandSubstitution?: ModelBooleanInput | null;
   status?: ModelOrderStatusInput | null;
@@ -360,20 +330,9 @@ export type ModelOrderStatusInput = {
   ne?: OrderStatus | null;
 };
 
-export type ModelOrderItemFilterInput = {
-  itemId?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  unit?: ModelStringInput | null;
-  size?: ModelStringInput | null;
-  weight?: ModelIntInput | null;
-  quantity?: ModelIntInput | null;
-  and?: Array<ModelOrderItemFilterInput | null> | null;
-  or?: Array<ModelOrderItemFilterInput | null> | null;
-  not?: ModelOrderItemFilterInput | null;
-};
-
 export type CreateCustomerMutation = {
   __typename: "Customer";
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -387,21 +346,23 @@ export type CreateCustomerMutation = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
   shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type UpdateCustomerMutation = {
   __typename: "Customer";
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -415,21 +376,23 @@ export type UpdateCustomerMutation = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
   shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type DeleteCustomerMutation = {
   __typename: "Customer";
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -443,21 +406,23 @@ export type DeleteCustomerMutation = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
   shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type CreateStoreMutation = {
   __typename: "Store";
+  id: string;
   storeId: string;
   name: string;
   contactName: string;
@@ -476,20 +441,22 @@ export type CreateStoreMutation = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type UpdateStoreMutation = {
   __typename: "Store";
+  id: string;
   storeId: string;
   name: string;
   contactName: string;
@@ -508,20 +475,22 @@ export type UpdateStoreMutation = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type DeleteStoreMutation = {
   __typename: "Store";
+  id: string;
   storeId: string;
   name: string;
   contactName: string;
@@ -540,23 +509,26 @@ export type DeleteStoreMutation = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type CreateOrderMutation = {
   __typename: "Order";
+  id: string;
   orderId: string;
   customer: {
     __typename: "Customer";
+    id: string;
     customerId: string;
     name: string;
     address: string;
@@ -571,632 +543,9 @@ export type CreateOrderMutation = {
       nextToken: string | null;
     } | null;
     shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  store: {
-    __typename: "Store";
-    storeId: string;
-    name: string;
-    contactName: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    status: string | null;
-    email: string;
-    phone: string | null;
-    curbCapacity: number | null;
-    deliveryCapacity: number | null;
-    shippingPreference: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  brandSubstitution: boolean | null;
-  status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateOrderMutation = {
-  __typename: "Order";
-  orderId: string;
-  customer: {
-    __typename: "Customer";
-    customerId: string;
-    name: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    email: string;
-    phone: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  store: {
-    __typename: "Store";
-    storeId: string;
-    name: string;
-    contactName: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    status: string | null;
-    email: string;
-    phone: string | null;
-    curbCapacity: number | null;
-    deliveryCapacity: number | null;
-    shippingPreference: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  brandSubstitution: boolean | null;
-  status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteOrderMutation = {
-  __typename: "Order";
-  orderId: string;
-  customer: {
-    __typename: "Customer";
-    customerId: string;
-    name: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    email: string;
-    phone: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  store: {
-    __typename: "Store";
-    storeId: string;
-    name: string;
-    contactName: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    status: string | null;
-    email: string;
-    phone: string | null;
-    curbCapacity: number | null;
-    deliveryCapacity: number | null;
-    shippingPreference: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  brandSubstitution: boolean | null;
-  status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateOrderItemMutation = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-};
-
-export type UpdateOrderItemMutation = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-};
-
-export type DeleteOrderItemMutation = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-};
-
-export type GetCustomerQuery = {
-  __typename: "Customer";
-  customerId: string;
-  name: string;
-  address: string;
-  address2: string | null;
-  city: string | null;
-  state: string | null;
-  zipCode: number | null;
-  email: string;
-  phone: string | null;
-  orders: {
-    __typename: "ModelOrderConnection";
-    items: Array<{
-      __typename: "Order";
-      orderId: string;
-      brandSubstitution: boolean | null;
-      status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListCustomersQuery = {
-  __typename: "ModelCustomerConnection";
-  items: Array<{
-    __typename: "Customer";
-    customerId: string;
-    name: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    email: string;
-    phone: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetStoreQuery = {
-  __typename: "Store";
-  storeId: string;
-  name: string;
-  contactName: string;
-  address: string;
-  address2: string | null;
-  city: string | null;
-  state: string | null;
-  zipCode: number | null;
-  status: string | null;
-  email: string;
-  phone: string | null;
-  curbCapacity: number | null;
-  deliveryCapacity: number | null;
-  shippingPreference: string | null;
-  orders: {
-    __typename: "ModelOrderConnection";
-    items: Array<{
-      __typename: "Order";
-      orderId: string;
-      brandSubstitution: boolean | null;
-      status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListStoresQuery = {
-  __typename: "ModelStoreConnection";
-  items: Array<{
-    __typename: "Store";
-    storeId: string;
-    name: string;
-    contactName: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    status: string | null;
-    email: string;
-    phone: string | null;
-    curbCapacity: number | null;
-    deliveryCapacity: number | null;
-    shippingPreference: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetOrderQuery = {
-  __typename: "Order";
-  orderId: string;
-  customer: {
-    __typename: "Customer";
-    customerId: string;
-    name: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    email: string;
-    phone: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  store: {
-    __typename: "Store";
-    storeId: string;
-    name: string;
-    contactName: string;
-    address: string;
-    address2: string | null;
-    city: string | null;
-    state: string | null;
-    zipCode: number | null;
-    status: string | null;
-    email: string;
-    phone: string | null;
-    curbCapacity: number | null;
-    deliveryCapacity: number | null;
-    shippingPreference: string | null;
-    orders: {
-      __typename: "ModelOrderConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  brandSubstitution: boolean | null;
-  status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListOrdersQuery = {
-  __typename: "ModelOrderConnection";
-  items: Array<{
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetOrderItemQuery = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-};
-
-export type ListOrderItemsQuery = {
-  __typename: "ModelOrderItemConnection";
   items: Array<{
     __typename: "OrderItem";
     itemId: string;
@@ -1205,14 +554,428 @@ export type ListOrderItemsQuery = {
     size: string | null;
     weight: number | null;
     quantity: number | null;
-    order: {
+  } | null>;
+  store: {
+    __typename: "Store";
+    id: string;
+    storeId: string;
+    name: string;
+    contactName: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    status: string | null;
+    email: string;
+    phone: string | null;
+    curbCapacity: number | null;
+    deliveryCapacity: number | null;
+    shippingPreference: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  brandSubstitution: boolean | null;
+  status: OrderStatus;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+export type UpdateOrderMutation = {
+  __typename: "Order";
+  id: string;
+  orderId: string;
+  customer: {
+    __typename: "Customer";
+    id: string;
+    customerId: string;
+    name: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    email: string;
+    phone: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    shippingPreference: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  items: Array<{
+    __typename: "OrderItem";
+    itemId: string;
+    name: string;
+    unit: string;
+    size: string | null;
+    weight: number | null;
+    quantity: number | null;
+  } | null>;
+  store: {
+    __typename: "Store";
+    id: string;
+    storeId: string;
+    name: string;
+    contactName: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    status: string | null;
+    email: string;
+    phone: string | null;
+    curbCapacity: number | null;
+    deliveryCapacity: number | null;
+    shippingPreference: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  brandSubstitution: boolean | null;
+  status: OrderStatus;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+export type DeleteOrderMutation = {
+  __typename: "Order";
+  id: string;
+  orderId: string;
+  customer: {
+    __typename: "Customer";
+    id: string;
+    customerId: string;
+    name: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    email: string;
+    phone: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    shippingPreference: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  items: Array<{
+    __typename: "OrderItem";
+    itemId: string;
+    name: string;
+    unit: string;
+    size: string | null;
+    weight: number | null;
+    quantity: number | null;
+  } | null>;
+  store: {
+    __typename: "Store";
+    id: string;
+    storeId: string;
+    name: string;
+    contactName: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    status: string | null;
+    email: string;
+    phone: string | null;
+    curbCapacity: number | null;
+    deliveryCapacity: number | null;
+    shippingPreference: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  brandSubstitution: boolean | null;
+  status: OrderStatus;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+export type GetCustomerQuery = {
+  __typename: "Customer";
+  id: string;
+  customerId: string;
+  name: string;
+  address: string;
+  address2: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: number | null;
+  email: string;
+  phone: string | null;
+  orders: {
+    __typename: "ModelOrderConnection";
+    items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  shippingPreference: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+export type ListCustomersQuery = {
+  __typename: "ModelCustomerConnection";
+  items: Array<{
+    __typename: "Customer";
+    id: string;
+    customerId: string;
+    name: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    email: string;
+    phone: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
     } | null;
+    shippingPreference: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetStoreQuery = {
+  __typename: "Store";
+  id: string;
+  storeId: string;
+  name: string;
+  contactName: string;
+  address: string;
+  address2: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: number | null;
+  status: string | null;
+  email: string;
+  phone: string | null;
+  curbCapacity: number | null;
+  deliveryCapacity: number | null;
+  shippingPreference: string | null;
+  orders: {
+    __typename: "ModelOrderConnection";
+    items: Array<{
+      __typename: "Order";
+      id: string;
+      orderId: string;
+      brandSubstitution: boolean | null;
+      status: OrderStatus;
+      createdAt: string | null;
+      updatedAt: string | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+export type ListStoresQuery = {
+  __typename: "ModelStoreConnection";
+  items: Array<{
+    __typename: "Store";
+    id: string;
+    storeId: string;
+    name: string;
+    contactName: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    status: string | null;
+    email: string;
+    phone: string | null;
+    curbCapacity: number | null;
+    deliveryCapacity: number | null;
+    shippingPreference: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetOrderQuery = {
+  __typename: "Order";
+  id: string;
+  orderId: string;
+  customer: {
+    __typename: "Customer";
+    id: string;
+    customerId: string;
+    name: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    email: string;
+    phone: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    shippingPreference: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  items: Array<{
+    __typename: "OrderItem";
+    itemId: string;
+    name: string;
+    unit: string;
+    size: string | null;
+    weight: number | null;
+    quantity: number | null;
+  } | null>;
+  store: {
+    __typename: "Store";
+    id: string;
+    storeId: string;
+    name: string;
+    contactName: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    status: string | null;
+    email: string;
+    phone: string | null;
+    curbCapacity: number | null;
+    deliveryCapacity: number | null;
+    shippingPreference: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null;
+  brandSubstitution: boolean | null;
+  status: OrderStatus;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+export type ListOrdersQuery = {
+  __typename: "ModelOrderConnection";
+  items: Array<{
+    __typename: "Order";
+    id: string;
+    orderId: string;
+    customer: {
+      __typename: "Customer";
+      id: string;
+      customerId: string;
+      name: string;
+      address: string;
+      address2: string | null;
+      city: string | null;
+      state: string | null;
+      zipCode: number | null;
+      email: string;
+      phone: string | null;
+      shippingPreference: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
+    } | null;
+    items: Array<{
+      __typename: "OrderItem";
+      itemId: string;
+      name: string;
+      unit: string;
+      size: string | null;
+      weight: number | null;
+      quantity: number | null;
+    } | null>;
+    store: {
+      __typename: "Store";
+      id: string;
+      storeId: string;
+      name: string;
+      contactName: string;
+      address: string;
+      address2: string | null;
+      city: string | null;
+      state: string | null;
+      zipCode: number | null;
+      status: string | null;
+      email: string;
+      phone: string | null;
+      curbCapacity: number | null;
+      deliveryCapacity: number | null;
+      shippingPreference: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
+    } | null;
+    brandSubstitution: boolean | null;
+    status: OrderStatus;
+    createdAt: string | null;
+    updatedAt: string | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type StoresByNameQuery = {
+  __typename: "ModelStoreConnection";
+  items: Array<{
+    __typename: "Store";
+    id: string;
+    storeId: string;
+    name: string;
+    contactName: string;
+    address: string;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: number | null;
+    status: string | null;
+    email: string;
+    phone: string | null;
+    curbCapacity: number | null;
+    deliveryCapacity: number | null;
+    shippingPreference: string | null;
+    orders: {
+      __typename: "ModelOrderConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null> | null;
   nextToken: string | null;
 };
@@ -1221,9 +984,11 @@ export type OrdersByStatusAndCreatedAtQuery = {
   __typename: "ModelOrderConnection";
   items: Array<{
     __typename: "Order";
+    id: string;
     orderId: string;
     customer: {
       __typename: "Customer";
+      id: string;
       customerId: string;
       name: string;
       address: string;
@@ -1234,15 +999,21 @@ export type OrdersByStatusAndCreatedAtQuery = {
       email: string;
       phone: string | null;
       shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
+    items: Array<{
+      __typename: "OrderItem";
+      itemId: string;
+      name: string;
+      unit: string;
+      size: string | null;
+      weight: number | null;
+      quantity: number | null;
+    } | null>;
     store: {
       __typename: "Store";
+      id: string;
       storeId: string;
       name: string;
       contactName: string;
@@ -1257,19 +1028,20 @@ export type OrdersByStatusAndCreatedAtQuery = {
       curbCapacity: number | null;
       deliveryCapacity: number | null;
       shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null;
     brandSubstitution: boolean | null;
     status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null> | null;
   nextToken: string | null;
 };
 
 export type OnCreateCustomerSubscription = {
   __typename: "Customer";
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -1283,21 +1055,23 @@ export type OnCreateCustomerSubscription = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
   shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnUpdateCustomerSubscription = {
   __typename: "Customer";
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -1311,21 +1085,23 @@ export type OnUpdateCustomerSubscription = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
   shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnDeleteCustomerSubscription = {
   __typename: "Customer";
+  id: string;
   customerId: string;
   name: string;
   address: string;
@@ -1339,21 +1115,23 @@ export type OnDeleteCustomerSubscription = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
   shippingPreference: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnCreateStoreSubscription = {
   __typename: "Store";
+  id: string;
   storeId: string;
   name: string;
   contactName: string;
@@ -1372,20 +1150,22 @@ export type OnCreateStoreSubscription = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnUpdateStoreSubscription = {
   __typename: "Store";
+  id: string;
   storeId: string;
   name: string;
   contactName: string;
@@ -1404,20 +1184,22 @@ export type OnUpdateStoreSubscription = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnDeleteStoreSubscription = {
   __typename: "Store";
+  id: string;
   storeId: string;
   name: string;
   contactName: string;
@@ -1436,23 +1218,26 @@ export type OnDeleteStoreSubscription = {
     __typename: "ModelOrderConnection";
     items: Array<{
       __typename: "Order";
+      id: string;
       orderId: string;
       brandSubstitution: boolean | null;
       status: OrderStatus;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: string | null;
+      updatedAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnCreateOrderSubscription = {
   __typename: "Order";
+  id: string;
   orderId: string;
   customer: {
     __typename: "Customer";
+    id: string;
     customerId: string;
     name: string;
     address: string;
@@ -1467,24 +1252,21 @@ export type OnCreateOrderSubscription = {
       nextToken: string | null;
     } | null;
     shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
+  items: Array<{
+    __typename: "OrderItem";
+    itemId: string;
+    name: string;
+    unit: string;
+    size: string | null;
+    weight: number | null;
+    quantity: number | null;
+  } | null>;
   store: {
     __typename: "Store";
+    id: string;
     storeId: string;
     name: string;
     contactName: string;
@@ -1503,20 +1285,22 @@ export type OnCreateOrderSubscription = {
       __typename: "ModelOrderConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
   brandSubstitution: boolean | null;
   status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnUpdateOrderSubscription = {
   __typename: "Order";
+  id: string;
   orderId: string;
   customer: {
     __typename: "Customer";
+    id: string;
     customerId: string;
     name: string;
     address: string;
@@ -1531,24 +1315,21 @@ export type OnUpdateOrderSubscription = {
       nextToken: string | null;
     } | null;
     shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
+  items: Array<{
+    __typename: "OrderItem";
+    itemId: string;
+    name: string;
+    unit: string;
+    size: string | null;
+    weight: number | null;
+    quantity: number | null;
+  } | null>;
   store: {
     __typename: "Store";
+    id: string;
     storeId: string;
     name: string;
     contactName: string;
@@ -1567,20 +1348,22 @@ export type OnUpdateOrderSubscription = {
       __typename: "ModelOrderConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
   brandSubstitution: boolean | null;
   status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 export type OnDeleteOrderSubscription = {
   __typename: "Order";
+  id: string;
   orderId: string;
   customer: {
     __typename: "Customer";
+    id: string;
     customerId: string;
     name: string;
     address: string;
@@ -1595,24 +1378,21 @@ export type OnDeleteOrderSubscription = {
       nextToken: string | null;
     } | null;
     shippingPreference: string | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
-  items: {
-    __typename: "ModelOrderItemConnection";
-    items: Array<{
-      __typename: "OrderItem";
-      itemId: string;
-      name: string;
-      unit: string;
-      size: string | null;
-      weight: number | null;
-      quantity: number | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
+  items: Array<{
+    __typename: "OrderItem";
+    itemId: string;
+    name: string;
+    unit: string;
+    size: string | null;
+    weight: number | null;
+    quantity: number | null;
+  } | null>;
   store: {
     __typename: "Store";
+    id: string;
     storeId: string;
     name: string;
     contactName: string;
@@ -1631,181 +1411,13 @@ export type OnDeleteOrderSubscription = {
       __typename: "ModelOrderConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   } | null;
   brandSubstitution: boolean | null;
   status: OrderStatus;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateOrderItemSubscription = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-};
-
-export type OnUpdateOrderItemSubscription = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-};
-
-export type OnDeleteOrderItemSubscription = {
-  __typename: "OrderItem";
-  itemId: string;
-  name: string;
-  unit: string;
-  size: string | null;
-  weight: number | null;
-  quantity: number | null;
-  order: {
-    __typename: "Order";
-    orderId: string;
-    customer: {
-      __typename: "Customer";
-      customerId: string;
-      name: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      email: string;
-      phone: string | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    items: {
-      __typename: "ModelOrderItemConnection";
-      nextToken: string | null;
-    } | null;
-    store: {
-      __typename: "Store";
-      storeId: string;
-      name: string;
-      contactName: string;
-      address: string;
-      address2: string | null;
-      city: string | null;
-      state: string | null;
-      zipCode: number | null;
-      status: string | null;
-      email: string;
-      phone: string | null;
-      curbCapacity: number | null;
-      deliveryCapacity: number | null;
-      shippingPreference: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    brandSubstitution: boolean | null;
-    status: OrderStatus;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  createdAt: string | null;
+  updatedAt: string | null;
 };
 
 @Injectable({
@@ -1819,6 +1431,7 @@ export class APIService {
     const statement = `mutation CreateCustomer($input: CreateCustomerInput!, $condition: ModelCustomerConditionInput) {
         createCustomer(input: $input, condition: $condition) {
           __typename
+          id
           customerId
           name
           address
@@ -1832,6 +1445,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -1863,6 +1477,7 @@ export class APIService {
     const statement = `mutation UpdateCustomer($input: UpdateCustomerInput!, $condition: ModelCustomerConditionInput) {
         updateCustomer(input: $input, condition: $condition) {
           __typename
+          id
           customerId
           name
           address
@@ -1876,6 +1491,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -1907,6 +1523,7 @@ export class APIService {
     const statement = `mutation DeleteCustomer($input: DeleteCustomerInput!, $condition: ModelCustomerConditionInput) {
         deleteCustomer(input: $input, condition: $condition) {
           __typename
+          id
           customerId
           name
           address
@@ -1920,6 +1537,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -1951,6 +1569,7 @@ export class APIService {
     const statement = `mutation CreateStore($input: CreateStoreInput!, $condition: ModelStoreConditionInput) {
         createStore(input: $input, condition: $condition) {
           __typename
+          id
           storeId
           name
           contactName
@@ -1969,6 +1588,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -1999,6 +1619,7 @@ export class APIService {
     const statement = `mutation UpdateStore($input: UpdateStoreInput!, $condition: ModelStoreConditionInput) {
         updateStore(input: $input, condition: $condition) {
           __typename
+          id
           storeId
           name
           contactName
@@ -2017,6 +1638,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -2047,6 +1669,7 @@ export class APIService {
     const statement = `mutation DeleteStore($input: DeleteStoreInput!, $condition: ModelStoreConditionInput) {
         deleteStore(input: $input, condition: $condition) {
           __typename
+          id
           storeId
           name
           contactName
@@ -2065,6 +1688,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -2095,9 +1719,11 @@ export class APIService {
     const statement = `mutation CreateOrder($input: CreateOrderInput!, $condition: ModelOrderConditionInput) {
         createOrder(input: $input, condition: $condition) {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -2117,19 +1743,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -2175,9 +1798,11 @@ export class APIService {
     const statement = `mutation UpdateOrder($input: UpdateOrderInput!, $condition: ModelOrderConditionInput) {
         updateOrder(input: $input, condition: $condition) {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -2197,19 +1822,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -2255,9 +1877,11 @@ export class APIService {
     const statement = `mutation DeleteOrder($input: DeleteOrderInput!, $condition: ModelOrderConditionInput) {
         deleteOrder(input: $input, condition: $condition) {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -2277,19 +1901,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -2328,226 +1949,11 @@ export class APIService {
     )) as any;
     return <DeleteOrderMutation>response.data.deleteOrder;
   }
-  async CreateOrderItem(
-    input: CreateOrderItemInput,
-    condition?: ModelOrderItemConditionInput
-  ): Promise<CreateOrderItemMutation> {
-    const statement = `mutation CreateOrderItem($input: CreateOrderItemInput!, $condition: ModelOrderItemConditionInput) {
-        createOrderItem(input: $input, condition: $condition) {
+  async GetCustomer(id: string, email: string): Promise<GetCustomerQuery> {
+    const statement = `query GetCustomer($id: ID!, $email: String!) {
+        getCustomer(id: $id, email: $email) {
           __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateOrderItemMutation>response.data.createOrderItem;
-  }
-  async UpdateOrderItem(
-    input: UpdateOrderItemInput,
-    condition?: ModelOrderItemConditionInput
-  ): Promise<UpdateOrderItemMutation> {
-    const statement = `mutation UpdateOrderItem($input: UpdateOrderItemInput!, $condition: ModelOrderItemConditionInput) {
-        updateOrderItem(input: $input, condition: $condition) {
-          __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateOrderItemMutation>response.data.updateOrderItem;
-  }
-  async DeleteOrderItem(
-    input: DeleteOrderItemInput,
-    condition?: ModelOrderItemConditionInput
-  ): Promise<DeleteOrderItemMutation> {
-    const statement = `mutation DeleteOrderItem($input: DeleteOrderItemInput!, $condition: ModelOrderItemConditionInput) {
-        deleteOrderItem(input: $input, condition: $condition) {
-          __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteOrderItemMutation>response.data.deleteOrderItem;
-  }
-  async GetCustomer(email: string): Promise<GetCustomerQuery> {
-    const statement = `query GetCustomer($email: String!) {
-        getCustomer(email: $email) {
-          __typename
+          id
           customerId
           name
           address
@@ -2561,6 +1967,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -2575,6 +1982,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
+      id,
       email
     };
     const response = (await API.graphql(
@@ -2583,17 +1991,19 @@ export class APIService {
     return <GetCustomerQuery>response.data.getCustomer;
   }
   async ListCustomers(
-    email?: string,
+    id?: string,
+    email?: ModelStringKeyConditionInput,
     filter?: ModelCustomerFilterInput,
     limit?: number,
     nextToken?: string,
     sortDirection?: ModelSortDirection
   ): Promise<ListCustomersQuery> {
-    const statement = `query ListCustomers($email: String, $filter: ModelCustomerFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
-        listCustomers(email: $email, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
+    const statement = `query ListCustomers($id: ID, $email: ModelStringKeyConditionInput, $filter: ModelCustomerFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
+        listCustomers(id: $id, email: $email, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
           __typename
           items {
             __typename
+            id
             customerId
             name
             address
@@ -2615,6 +2025,9 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {};
+    if (id) {
+      gqlAPIServiceArguments.id = id;
+    }
     if (email) {
       gqlAPIServiceArguments.email = email;
     }
@@ -2639,6 +2052,7 @@ export class APIService {
     const statement = `query GetStore($storeId: ID!, $email: String!) {
         getStore(storeId: $storeId, email: $email) {
           __typename
+          id
           storeId
           name
           contactName
@@ -2657,6 +2071,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -2691,6 +2106,7 @@ export class APIService {
           __typename
           items {
             __typename
+            id
             storeId
             name
             contactName
@@ -2739,17 +2155,15 @@ export class APIService {
     )) as any;
     return <ListStoresQuery>response.data.listStores;
   }
-  async GetOrder(
-    orderId: string,
-    status: OrderStatus,
-    createdAt: string
-  ): Promise<GetOrderQuery> {
-    const statement = `query GetOrder($orderId: ID!, $status: OrderStatus!, $createdAt: AWSDateTime!) {
-        getOrder(orderId: $orderId, status: $status, createdAt: $createdAt) {
+  async GetOrder(orderId: string, status: OrderStatus): Promise<GetOrderQuery> {
+    const statement = `query GetOrder($orderId: ID!, $status: OrderStatus!) {
+        getOrder(orderId: $orderId, status: $status) {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -2769,19 +2183,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -2811,8 +2222,7 @@ export class APIService {
       }`;
     const gqlAPIServiceArguments: any = {
       orderId,
-      status,
-      createdAt
+      status
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -2821,20 +2231,22 @@ export class APIService {
   }
   async ListOrders(
     orderId?: string,
-    statusCreatedAt?: ModelOrderPrimaryCompositeKeyConditionInput,
+    status?: ModelStringKeyConditionInput,
     filter?: ModelOrderFilterInput,
     limit?: number,
     nextToken?: string,
     sortDirection?: ModelSortDirection
   ): Promise<ListOrdersQuery> {
-    const statement = `query ListOrders($orderId: ID, $statusCreatedAt: ModelOrderPrimaryCompositeKeyConditionInput, $filter: ModelOrderFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
-        listOrders(orderId: $orderId, statusCreatedAt: $statusCreatedAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
+    const statement = `query ListOrders($orderId: ID, $status: ModelStringKeyConditionInput, $filter: ModelOrderFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
+        listOrders(orderId: $orderId, status: $status, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
           __typename
           items {
             __typename
+            id
             orderId
             customer {
               __typename
+              id
               customerId
               name
               address
@@ -2850,10 +2262,16 @@ export class APIService {
             }
             items {
               __typename
-              nextToken
+              itemId
+              name
+              unit
+              size
+              weight
+              quantity
             }
             store {
               __typename
+              id
               storeId
               name
               contactName
@@ -2883,8 +2301,8 @@ export class APIService {
     if (orderId) {
       gqlAPIServiceArguments.orderId = orderId;
     }
-    if (statusCreatedAt) {
-      gqlAPIServiceArguments.statusCreatedAt = statusCreatedAt;
+    if (status) {
+      gqlAPIServiceArguments.status = status;
     }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
@@ -2903,101 +2321,50 @@ export class APIService {
     )) as any;
     return <ListOrdersQuery>response.data.listOrders;
   }
-  async GetOrderItem(id: string): Promise<GetOrderItemQuery> {
-    const statement = `query GetOrderItem($id: ID!) {
-        getOrderItem(id: $id) {
-          __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetOrderItemQuery>response.data.getOrderItem;
-  }
-  async ListOrderItems(
-    filter?: ModelOrderItemFilterInput,
+  async StoresByName(
+    name?: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelStoreFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ListOrderItemsQuery> {
-    const statement = `query ListOrderItems($filter: ModelOrderItemFilterInput, $limit: Int, $nextToken: String) {
-        listOrderItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<StoresByNameQuery> {
+    const statement = `query StoresByName($name: String, $sortDirection: ModelSortDirection, $filter: ModelStoreFilterInput, $limit: Int, $nextToken: String) {
+        storesByName(name: $name, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
-            itemId
+            id
+            storeId
             name
-            unit
-            size
-            weight
-            quantity
-            order {
+            contactName
+            address
+            address2
+            city
+            state
+            zipCode
+            status
+            email
+            phone
+            curbCapacity
+            deliveryCapacity
+            shippingPreference
+            orders {
               __typename
-              orderId
-              brandSubstitution
-              status
-              createdAt
-              updatedAt
+              nextToken
             }
+            createdAt
+            updatedAt
           }
           nextToken
         }
       }`;
     const gqlAPIServiceArguments: any = {};
+    if (name) {
+      gqlAPIServiceArguments.name = name;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -3010,7 +2377,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListOrderItemsQuery>response.data.listOrderItems;
+    return <StoresByNameQuery>response.data.storesByName;
   }
   async OrdersByStatusAndCreatedAt(
     status?: OrderStatus,
@@ -3025,9 +2392,11 @@ export class APIService {
           __typename
           items {
             __typename
+            id
             orderId
             customer {
               __typename
+              id
               customerId
               name
               address
@@ -3043,10 +2412,16 @@ export class APIService {
             }
             items {
               __typename
-              nextToken
+              itemId
+              name
+              unit
+              size
+              weight
+              quantity
             }
             store {
               __typename
+              id
               storeId
               name
               contactName
@@ -3105,6 +2480,7 @@ export class APIService {
       `subscription OnCreateCustomer {
         onCreateCustomer {
           __typename
+          id
           customerId
           name
           address
@@ -3118,6 +2494,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -3141,6 +2518,7 @@ export class APIService {
       `subscription OnUpdateCustomer {
         onUpdateCustomer {
           __typename
+          id
           customerId
           name
           address
@@ -3154,6 +2532,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -3177,6 +2556,7 @@ export class APIService {
       `subscription OnDeleteCustomer {
         onDeleteCustomer {
           __typename
+          id
           customerId
           name
           address
@@ -3190,6 +2570,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -3211,6 +2592,7 @@ export class APIService {
       `subscription OnCreateStore {
         onCreateStore {
           __typename
+          id
           storeId
           name
           contactName
@@ -3229,6 +2611,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -3249,6 +2632,7 @@ export class APIService {
       `subscription OnUpdateStore {
         onUpdateStore {
           __typename
+          id
           storeId
           name
           contactName
@@ -3267,6 +2651,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -3287,6 +2672,7 @@ export class APIService {
       `subscription OnDeleteStore {
         onDeleteStore {
           __typename
+          id
           storeId
           name
           contactName
@@ -3305,6 +2691,7 @@ export class APIService {
             __typename
             items {
               __typename
+              id
               orderId
               brandSubstitution
               status
@@ -3325,9 +2712,11 @@ export class APIService {
       `subscription OnCreateOrder {
         onCreateOrder {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -3347,19 +2736,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -3395,9 +2781,11 @@ export class APIService {
       `subscription OnUpdateOrder {
         onUpdateOrder {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -3417,19 +2805,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -3465,9 +2850,11 @@ export class APIService {
       `subscription OnDeleteOrder {
         onDeleteOrder {
           __typename
+          id
           orderId
           customer {
             __typename
+            id
             customerId
             name
             address
@@ -3487,19 +2874,16 @@ export class APIService {
           }
           items {
             __typename
-            items {
-              __typename
-              itemId
-              name
-              unit
-              size
-              weight
-              quantity
-            }
-            nextToken
+            itemId
+            name
+            unit
+            size
+            weight
+            quantity
           }
           store {
             __typename
+            id
             storeId
             name
             contactName
@@ -3529,196 +2913,4 @@ export class APIService {
       }`
     )
   ) as Observable<OnDeleteOrderSubscription>;
-
-  OnCreateOrderItemListener: Observable<
-    OnCreateOrderItemSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateOrderItem {
-        onCreateOrderItem {
-          __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`
-    )
-  ) as Observable<OnCreateOrderItemSubscription>;
-
-  OnUpdateOrderItemListener: Observable<
-    OnUpdateOrderItemSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateOrderItem {
-        onUpdateOrderItem {
-          __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`
-    )
-  ) as Observable<OnUpdateOrderItemSubscription>;
-
-  OnDeleteOrderItemListener: Observable<
-    OnDeleteOrderItemSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteOrderItem {
-        onDeleteOrderItem {
-          __typename
-          itemId
-          name
-          unit
-          size
-          weight
-          quantity
-          order {
-            __typename
-            orderId
-            customer {
-              __typename
-              customerId
-              name
-              address
-              address2
-              city
-              state
-              zipCode
-              email
-              phone
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            items {
-              __typename
-              nextToken
-            }
-            store {
-              __typename
-              storeId
-              name
-              contactName
-              address
-              address2
-              city
-              state
-              zipCode
-              status
-              email
-              phone
-              curbCapacity
-              deliveryCapacity
-              shippingPreference
-              createdAt
-              updatedAt
-            }
-            brandSubstitution
-            status
-            createdAt
-            updatedAt
-          }
-        }
-      }`
-    )
-  ) as Observable<OnDeleteOrderItemSubscription>;
 }

@@ -1,6 +1,7 @@
 # this is an auto generated file. This will be overwritten
 subscription OnCreateCustomer {
   onCreateCustomer {
+    id
     customerId
     name
     address
@@ -12,6 +13,7 @@ subscription OnCreateCustomer {
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -27,6 +29,7 @@ subscription OnCreateCustomer {
 }
 subscription OnUpdateCustomer {
   onUpdateCustomer {
+    id
     customerId
     name
     address
@@ -38,6 +41,7 @@ subscription OnUpdateCustomer {
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -53,6 +57,7 @@ subscription OnUpdateCustomer {
 }
 subscription OnDeleteCustomer {
   onDeleteCustomer {
+    id
     customerId
     name
     address
@@ -64,6 +69,7 @@ subscription OnDeleteCustomer {
     phone
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -79,6 +85,7 @@ subscription OnDeleteCustomer {
 }
 subscription OnCreateStore {
   onCreateStore {
+    id
     storeId
     name
     contactName
@@ -95,6 +102,7 @@ subscription OnCreateStore {
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -109,6 +117,7 @@ subscription OnCreateStore {
 }
 subscription OnUpdateStore {
   onUpdateStore {
+    id
     storeId
     name
     contactName
@@ -125,6 +134,7 @@ subscription OnUpdateStore {
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -139,6 +149,7 @@ subscription OnUpdateStore {
 }
 subscription OnDeleteStore {
   onDeleteStore {
+    id
     storeId
     name
     contactName
@@ -155,6 +166,7 @@ subscription OnDeleteStore {
     shippingPreference
     orders {
       items {
+        id
         orderId
         brandSubstitution
         status
@@ -169,8 +181,10 @@ subscription OnDeleteStore {
 }
 subscription OnCreateOrder {
   onCreateOrder {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -188,17 +202,15 @@ subscription OnCreateOrder {
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -227,8 +239,10 @@ subscription OnCreateOrder {
 }
 subscription OnUpdateOrder {
   onUpdateOrder {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -246,17 +260,15 @@ subscription OnUpdateOrder {
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -285,8 +297,10 @@ subscription OnUpdateOrder {
 }
 subscription OnDeleteOrder {
   onDeleteOrder {
+    id
     orderId
     customer {
+      id
       customerId
       name
       address
@@ -304,17 +318,15 @@ subscription OnDeleteOrder {
       updatedAt
     }
     items {
-      items {
-        itemId
-        name
-        unit
-        size
-        weight
-        quantity
-      }
-      nextToken
+      itemId
+      name
+      unit
+      size
+      weight
+      quantity
     }
     store {
+      id
       storeId
       name
       contactName
@@ -339,161 +351,5 @@ subscription OnDeleteOrder {
     status
     createdAt
     updatedAt
-  }
-}
-subscription OnCreateOrderItem {
-  onCreateOrderItem {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
-  }
-}
-subscription OnUpdateOrderItem {
-  onUpdateOrderItem {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
-  }
-}
-subscription OnDeleteOrderItem {
-  onDeleteOrderItem {
-    itemId
-    name
-    unit
-    size
-    weight
-    quantity
-    order {
-      orderId
-      customer {
-        customerId
-        name
-        address
-        address2
-        city
-        state
-        zipCode
-        email
-        phone
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      items {
-        nextToken
-      }
-      store {
-        storeId
-        name
-        contactName
-        address
-        address2
-        city
-        state
-        zipCode
-        status
-        email
-        phone
-        curbCapacity
-        deliveryCapacity
-        shippingPreference
-        createdAt
-        updatedAt
-      }
-      brandSubstitution
-      status
-      createdAt
-      updatedAt
-    }
   }
 }

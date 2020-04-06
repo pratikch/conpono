@@ -1,28 +1,34 @@
-<form [formGroup]="orderForm">
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <mat-card>
     <mat-card-header>
       <mat-card-title>Order details</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <div fxLayout="column wrap" fxLayoutAlign="start" fxLayoutGap="10px" formArrayName="items">
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="column wrap" fxLayoutAlign="start" formArrayName="items">
         <div fxLayout="row wrap" fxLayoutAlign="start" fxLayoutGap="10px" *ngFor="let itemForm of itemFormArray.controls; let i=index" [formGroupName]="i">
           <mat-form-field fxFlex>
             <mat-label>Item</mat-label>
-            <input matInput placeholder="Item" formControlName="item" />
+            <input id="{{'item'+i }}"matInput placeholder="Item" formControlName="item" required/>
+            <mat-error *ngIf="itemFormArray.controls[i].controls['item'].hasError('required')">
+              Item is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
   
           <mat-form-field fxFlex="12">
             <mat-label>Unit</mat-label>
-            <mat-select placeholder="Unit" formControlName="unit">
+            <mat-select placeholder="Unit" formControlName="unit" required>
               <mat-option *ngFor="let unit of units" [value]="unit.abbreviation">
                 {{ unit.name }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="itemFormArray.controls[i].controls['unit'].hasError('required')">
+              Unit is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="12" *ngIf="itemForm.controls['unit'].value==='wi'">
             <mat-label>Weight</mat-label>
-            <input type="number" matInput placeholder="Weight" min="0" formControlName="weight" />
+            <input type="number" matInput placeholder="Weight" min="0.1" formControlName="weight" />
             <span matSuffix>lbs</span>
           </mat-form-field>
 
@@ -37,10 +43,13 @@
 
           <mat-form-field fxFlex="8">
             <mat-label>Quantity</mat-label>
-            <input type="number" matInput placeholder="Quantity" min="0" formControlName="quantity" />
+            <input type="number" matInput placeholder="Quantity" min="1" formControlName="quantity" required/>
+            <mat-error *ngIf="itemFormArray.controls[i].controls['quantity'].hasError('required')">
+              Quantity is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
           
-          <button mat-icon-button matTooltip="Add item" type="button" *ngIf="i==itemFormArray.length-1" (click)="addItemAt()">
+          <button mat-icon-button matTooltip="Add item" type="button" *ngIf="i==itemFormArray.length-1" (click)="addItemAt()" [disabled]="itemFormArray.controls[i].invalid">
             <mat-icon>add</mat-icon>
           </button>
 
@@ -49,9 +58,10 @@
           </button>
         </div>
       </div>
+      <mat-slide-toggle formControlName="brandSubstitution">Allow brand substitution, so shoppers can substitute equivalent or higher quality product</mat-slide-toggle>
     </mat-card-content>
     <mat-card-actions fxLayoutAlign="end">
-      <button mat-raised-button color="primary" type="submit">Checkout</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="orderForm.invalid">Checkout</button>
     </mat-card-actions>
   </mat-card>
 </form>

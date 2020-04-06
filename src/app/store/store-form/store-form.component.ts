@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { APIService } from 'src/app/API.service';
 import { AddressComponent } from 'src/app/common/address/address.component';
 import { ContactComponent } from 'src/app/common/contact/contact.component';
 
@@ -13,7 +14,7 @@ export class StoreFormComponent implements OnInit {
   @ViewChild(ContactComponent, {static: true}) contactForm: ContactComponent;
   storeForm: FormGroup;
   
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private apiservice: APIService) {}
   ngOnInit(): void {
     this.storeForm = this.fb.group({
       name: [null, Validators.required],
@@ -33,7 +34,7 @@ export class StoreFormComponent implements OnInit {
     return this.storeForm.controls.capacity as FormGroup;
   }
 
-  onSubmit() {
+  async onSubmit() {
     // console.log(this.storeForm);
     const storeInput = {
       name: this.storeForm.value.name,
@@ -42,14 +43,17 @@ export class StoreFormComponent implements OnInit {
       address2: this.storeForm.value.address.address2,
       city: this.storeForm.value.address.city,
       state: this.storeForm.value.address.state,
-      postalCode: this.storeForm.value.address.postalCode,
+      zipCode: this.storeForm.value.address.postalCode,
       status: this.storeForm.value.status,
       curbCapacity: this.storeForm.value.capacity.curb,
       deliveryCapacity: this.storeForm.value.capacity.delivery,
-      shipPreferance: this.storeForm.value.shipping,
+      shippingPreference: this.storeForm.value.shipping,
       phone: this.storeForm.value.contact.phone,
       email: this.storeForm.value.contact.email,
+      storeId: ''+Math.floor((Math.random()*1000000000))
     }
-    // this.apiservice.CreateStore(storeInput);
+    await this.apiservice.CreateStore(storeInput);
+
+    this.storeForm.reset();
   }
 }
