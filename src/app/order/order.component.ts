@@ -68,8 +68,9 @@ export class OrderComponent implements OnInit {
       orderId: ''+Math.floor(Math.random()*new Date().getUTCMilliseconds()),
       brandSubstitution: this.orderForm.value.brandSubstitution,
       status: OrderStatus.NEW,
+      items: []
 
     };
-    await this.apiservice.CreateOrderWithItems(order)
+    await this.apiservice.CreateOrder(order)
   }
 }
